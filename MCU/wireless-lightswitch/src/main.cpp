@@ -9,3 +9,8 @@ void activateLED() {
 void deactivateLED() {
   digitalWrite(LED_BUILTIN, HIGH);
 }
+void setup() {
+  Serial.begin(9600);
+  pinMode(LED_BUILTIN, OUTPUT);
+  deactivateLED();
+}
