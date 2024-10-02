@@ -13,4 +13,13 @@ void setup() {
   Serial.begin(9600);
   pinMode(LED_BUILTIN, OUTPUT);
   deactivateLED();
+  Serial.println("Connecting to " + String(ssid));  
+  WiFi.begin(ssid, password);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+    Serial.print(".");
+  }
+
+  Serial.println("\nWiFi connected.\nIP address: " + WiFi.localIP().toString());
 }
