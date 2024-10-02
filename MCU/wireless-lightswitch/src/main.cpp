@@ -27,3 +27,8 @@ void setup() {
   server.begin();
   Serial.println("HTTP server started on port 80");
 }
+
+void loop() {
+  server.handleClient();
+  delay(100);
+}
