@@ -3,6 +3,8 @@
 #include <ESP8266WebServer.h>
 const char* ssid = WIFI_SSID;
 const char* password = PASSWORD;
+ESP8266WebServer server(80);
+
 void activateLED() {
   digitalWrite(LED_BUILTIN, LOW);
 }
@@ -22,4 +24,6 @@ void setup() {
   }
 
   Serial.println("\nWiFi connected.\nIP address: " + WiFi.localIP().toString());
+  server.begin();
+  Serial.println("HTTP server started on port 80");
 }
