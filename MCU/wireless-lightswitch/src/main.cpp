@@ -11,6 +11,14 @@ void activateLED() {
 void deactivateLED() {
   digitalWrite(LED_BUILTIN, HIGH);
 }
+
+void blink() {
+  activateLED();
+  delay(400);
+  deactivateLED();  
+  server.send(200, "text/plain", "LED was turned on briefly");
+}
+
 void setup() {
   Serial.begin(9600);
   pinMode(LED_BUILTIN, OUTPUT);
@@ -24,6 +32,9 @@ void setup() {
   }
 
   Serial.println("\nWiFi connected.\nIP address: " + WiFi.localIP().toString());
+
+  server.on("/blink", blink);
+
   server.begin();
   Serial.println("HTTP server started on port 80");
 }
