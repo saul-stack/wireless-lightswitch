@@ -3,6 +3,7 @@
 #include <ESP8266WebServer.h>
 const char* ssid = WIFI_SSID;
 const char* password = WIFI_PASSWORD;
+const char* device_name = "esp8266-lightswitch";
 ESP8266WebServer server(80);
 
 void activateLED() {
@@ -46,6 +47,7 @@ void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
   deactivateLED();
   Serial.println("Connecting to " + String(ssid));  
+  WiFi.hostname(device_name);
   WiFi.begin(ssid, password);
 
   while (WiFi.status() != WL_CONNECTED) {
@@ -54,6 +56,7 @@ void setup() {
   }
 
   Serial.println("\nWiFi connected.\nIP address: " + WiFi.localIP().toString());
+  Serial.println("Device name: " + String(device_name));
 
   server.on("/blink", blinkLED);
   server.on("/on", turnOnLED);
