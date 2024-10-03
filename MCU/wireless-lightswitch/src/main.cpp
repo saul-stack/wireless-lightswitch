@@ -8,6 +8,7 @@ ESP8266WebServer server(80);
 void activateLED() {
   digitalWrite(LED_BUILTIN, LOW);
 }
+
 void deactivateLED() {
   digitalWrite(LED_BUILTIN, HIGH);
 }
@@ -19,6 +20,7 @@ void blinkLED() {
   deactivateLED();  
   server.send(200, "text/plain", "LED was turned on briefly");
 }
+
 void turnOnLED() {
   activateLED();
   server.send(200, "text/plain", "LED was turned on");
