@@ -29,6 +29,15 @@ void turnOffLED() {
   server.send(200, "text/plain", "LED was turned off");
 }
 
+void toggleLED() {
+  if (digitalRead(LED_BUILTIN) == HIGH) {
+    activateLED();
+    server.send(200, "text/plain", "LED was turned on");
+  } else {
+    deactivateLED();
+    server.send(200, "text/plain", "LED was turned off");
+  }
+}
 
 void setup() {
   Serial.begin(9600);
