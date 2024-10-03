@@ -1,10 +1,8 @@
 import "./App.css";
 
-import { useState } from "react";
+import { HomePage } from "./Components/HomePage";
 
 function App() {
-  const [count, setCount] = useState(0);
-  return <h1>Test</h1>;
+  return <HomePage />;
 }
-
 export default App;
