@@ -2,10 +2,13 @@
 #include <ArduinoJson.h>
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
+
 const char* ssid = WIFI_SSID;
 const char* password = WIFI_PASSWORD;
 const char* device_name = "esp8266-lightswitch";
+
 ESP8266WebServer server(80);
+
 
 void activateLED() {
   digitalWrite(LED_BUILTIN, LOW);
@@ -14,6 +17,7 @@ void activateLED() {
 void deactivateLED() {
   digitalWrite(LED_BUILTIN, HIGH);
 }
+
 
 void blinkLED() {
   deactivateLED();  
@@ -80,13 +84,17 @@ void handlePostToLED() {
 }
 
 
-void setup() {
-  Serial.begin(9600);
-  pinMode(LED_BUILTIN, OUTPUT);
-  deactivateLED();
-  Serial.println("Connecting to " + String(ssid));  
-  WiFi.hostname(device_name);
+void startServer(){
+
+  server.on("/LED", HTTP_POST, handlePostToLED);
+  server.begin();
+  Serial.println("HTTP server started on port 80");
+}
+
+void connectToWiFi(){
+   WiFi.hostname(device_name);
   WiFi.begin(ssid, password);
+  Serial.println("Connecting to " + String(ssid));  
 
   while (WiFi.status() != WL_CONNECTED) {
     delay(1000);
@@ -96,13 +104,19 @@ void setup() {
   Serial.println("\nWiFi connected.\nIP address: " + WiFi.localIP().toString());
   Serial.println("Device name: " + String(device_name));
 
-  server.on("/blink", blinkLED);
-  server.on("/on", turnOnLED);
-  server.on("/off", turnOffLED);
-  server.on("/toggle", toggleLED);
+}
 
-  server.begin();
-  Serial.println("HTTP server started on port 80");
+
+void setup() {
+  pinMode(LED_BUILTIN, OUTPUT);
+  deactivateLED();
+
+  Serial.begin(9600);
+
+  connectToWiFi();
+
+  startServer();
+
 }
 
 void loop() {
