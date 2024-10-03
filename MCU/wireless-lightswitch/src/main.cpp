@@ -24,6 +24,11 @@ void turnOnLED() {
   server.send(200, "text/plain", "LED was turned on");
 }
 
+void turnOffLED() {
+  deactivateLED();
+  server.send(200, "text/plain", "LED was turned off");
+}
+
 
 void setup() {
   Serial.begin(9600);
