@@ -12,9 +12,10 @@ void deactivateLED() {
   digitalWrite(LED_BUILTIN, HIGH);
 }
 
-void blink() {
+void blinkLED() {
+  deactivateLED();  
   activateLED();
-  delay(400);
+  delay(100);
   deactivateLED();  
   server.send(200, "text/plain", "LED was turned on briefly");
 }
