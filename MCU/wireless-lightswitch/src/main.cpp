@@ -2,7 +2,7 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
 const char* ssid = WIFI_SSID;
-const char* password = PASSWORD;
+const char* password = WIFI_PASSWORD;
 ESP8266WebServer server(80);
 
 void activateLED() {
