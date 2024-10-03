@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <ArduinoJson.h>
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
 const char* ssid = WIFI_SSID;
@@ -41,6 +42,43 @@ void toggleLED() {
     server.send(200, "text/plain", "LED was turned off");
   }
 }
+
+
+void handlePostToLED() {  
+  if (server.hasArg("plain")) {
+    String requestBody = server.arg("plain");
+
+    JsonDocument parsedJson;
+
+    DeserializationError error = deserializeJson(parsedJson, requestBody);
+
+    if (error) {
+      Serial.println("deserializeJson() failed: " + String(error.f_str()));
+      server.send(400, "text/plain", "Invalid JSON");
+      return;
+    }
+
+    const char* action = parsedJson["action"];
+    Serial.println("LED action: " + String(action));
+
+    if (String(action) == "on") {
+      turnOnLED();
+    } else if (String(action) == "off") {
+      turnOffLED();
+    } else if (String(action) == "toggle") {
+      toggleLED();
+    } else if (String(action) == "blink") {
+      blinkLED();
+    } else {
+      server.send(400, "text/plain", "Invalid 'action' key.");
+      Serial.println("Invalid LED action: " + String(action) + "\n");
+    }
+  } else {
+    server.send(400, "text/plain", "Invalid request.");
+    Serial.println("Received invalid /LED request");
+  }
+}
+
 
 void setup() {
   Serial.begin(9600);
