@@ -19,6 +19,11 @@ void blinkLED() {
   deactivateLED();  
   server.send(200, "text/plain", "LED was turned on briefly");
 }
+void turnOnLED() {
+  activateLED();
+  server.send(200, "text/plain", "LED was turned on");
+}
+
 
 void setup() {
   Serial.begin(9600);
