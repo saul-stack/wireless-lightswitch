@@ -53,7 +53,10 @@ void setup() {
 
   Serial.println("\nWiFi connected.\nIP address: " + WiFi.localIP().toString());
 
-  server.on("/blink", blink);
+  server.on("/blink", blinkLED);
+  server.on("/on", turnOnLED);
+  server.on("/off", turnOffLED);
+  server.on("/toggle", toggleLED);
 
   server.begin();
   Serial.println("HTTP server started on port 80");
