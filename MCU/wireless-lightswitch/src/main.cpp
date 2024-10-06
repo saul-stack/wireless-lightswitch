@@ -1,13 +1,9 @@
 #include <Arduino.h>
 #include <ArduinoJson.h>
-#include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
 
 #include "utils/led_functions.h"
-
-const char* ssid = WIFI_SSID;
-const char* password = WIFI_PASSWORD;
-const char* BOARD_HOSTNAME = "esp8266-lightswitch";
+#include "utils/connection_functions.h"
 
 ESP8266WebServer server(80);
 
@@ -66,21 +62,6 @@ void startServer(){
 
   server.begin();
   Serial.println("HTTP server started on port 80");
-}
-
-void connectToWiFi(){
-  WiFi.hostname(BOARD_HOSTNAME);
-  WiFi.begin(ssid, password);
-  Serial.println("Connecting to " + String(ssid));  
-
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(1000);
-    Serial.print(".");
-  }
-
-  Serial.println("\nWiFi connected.\nIP address: " + WiFi.localIP().toString());
-  Serial.println("Device name: " + String(BOARD_HOSTNAME));
-
 }
 
 
