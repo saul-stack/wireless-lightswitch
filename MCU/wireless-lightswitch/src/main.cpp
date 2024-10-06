@@ -3,51 +3,13 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
 
+#include "utils/led_functions.h"
+
 const char* ssid = WIFI_SSID;
 const char* password = WIFI_PASSWORD;
 const char* BOARD_HOSTNAME = "esp8266-lightswitch";
 
 ESP8266WebServer server(80);
-
-
-void activateLed() {
-  digitalWrite(LED_BUILTIN, LOW);
-}
-
-void deactivateLed() {
-  digitalWrite(LED_BUILTIN, HIGH);
-}
-
-
-void blinkLed() {
-  deactivateLed();  
-  delay(50);
-  activateLed();
-  delay(100);
-  deactivateLed();  
-  server.send(200, "text/plain", "LED was turned on briefly");
-}
-
-void toggleLedOn() {
-  activateLed();
-  server.send(200, "text/plain", "LED was turned on");
-}
-
-void toggleLedOff() {
-  deactivateLed();
-  server.send(200, "text/plain", "LED was turned off");
-}
-
-void toggleLed() {
-  if (digitalRead(LED_BUILTIN) == HIGH) {
-    activateLed();
-    server.send(200, "text/plain", "LED was turned on");
-  } else {
-    deactivateLed();
-    server.send(200, "text/plain", "LED was turned off");
-  }
-}
-
 
 void handleOptionsRequest() {
   server.sendHeader("Access-Control-Allow-Origin", "*");
