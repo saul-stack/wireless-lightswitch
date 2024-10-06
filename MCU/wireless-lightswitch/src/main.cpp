@@ -6,17 +6,9 @@
 #include "utils/connection_functions.h"
 #include "utils/request_handlers.h"
 
-ESP8266WebServer server(80);
+const int PORT = 80;
 
-void startServer(){
-
-  server.on("/LED", HTTP_POST, handlePostToLed);
-  server.on("/LED", HTTP_OPTIONS, handleOptionsRequest);
-
-  server.begin();
-  Serial.println("HTTP server started on port 80");
-}
-
+ESP8266WebServer server(PORT);
 
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
@@ -25,7 +17,6 @@ void setup() {
   Serial.begin(9600);
 
   connectToWiFi();
-
   startServer();
 
 }
