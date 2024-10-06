@@ -21,6 +21,7 @@ void deactivateLED() {
 
 void blinkLED() {
   deactivateLED();  
+  delay(50);
   activateLED();
   delay(100);
   deactivateLED();  
@@ -48,7 +49,19 @@ void toggleLED() {
 }
 
 
+void handleOptionsRequest() {
+  server.sendHeader("Access-Control-Allow-Origin", "*");
+  server.sendHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+  server.sendHeader("Access-Control-Allow-Headers", "Content-Type");
+  server.send(204);
+}
+
 void handlePostToLED() {  
+
+  server.sendHeader("Access-Control-Allow-Origin", "*");
+  server.sendHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+  server.sendHeader("Access-Control-Allow-Headers", "Content-Type");
+  
   if (server.hasArg("plain")) {
     String requestBody = server.arg("plain");
 
@@ -65,9 +78,9 @@ void handlePostToLED() {
     const char* action = parsedJson["action"];
     Serial.println("LED action: " + String(action));
 
-    if (String(action) == "on") {
+    if (String(action) == "activate") {
       turnOnLED();
-    } else if (String(action) == "off") {
+    } else if (String(action) == "deactivate") {
       turnOffLED();
     } else if (String(action) == "toggle") {
       toggleLED();
@@ -87,6 +100,8 @@ void handlePostToLED() {
 void startServer(){
 
   server.on("/LED", HTTP_POST, handlePostToLED);
+  server.on("/LED", HTTP_OPTIONS, handleOptionsRequest);
+
   server.begin();
   Serial.println("HTTP server started on port 80");
 }
