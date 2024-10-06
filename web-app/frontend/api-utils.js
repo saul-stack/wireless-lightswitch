@@ -3,7 +3,7 @@ import { getBoardName } from "./data-utils";
 
 const requestLEDAction = async (request) => {
   try {
-    const boardName = await getBoardName();
+    const boardName = getBoardName();
     await axios.post(`http://${boardName}/LED`, request, {
       headers: {
         "Content-Type": "application/json",
