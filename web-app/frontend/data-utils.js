@@ -1,7 +1,5 @@
-const getBoardName = async () => {
-  const rawData = await fetch("/common-config.json");
-  const config = await rawData.json();
-  const { boardName } = config;
+const getBoardName = () => {
+  const boardName = import.meta.env.VITE_BOARD_HOSTNAME || "";
   return boardName;
 };
 
