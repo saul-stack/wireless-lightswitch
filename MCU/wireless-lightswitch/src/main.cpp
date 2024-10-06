@@ -10,40 +10,40 @@ const char* BOARD_HOSTNAME = "esp8266-lightswitch";
 ESP8266WebServer server(80);
 
 
-void activateLED() {
+void activateLed() {
   digitalWrite(LED_BUILTIN, LOW);
 }
 
-void deactivateLED() {
+void deactivateLed() {
   digitalWrite(LED_BUILTIN, HIGH);
 }
 
 
-void blinkLED() {
-  deactivateLED();  
+void blinkLed() {
+  deactivateLed();  
   delay(50);
-  activateLED();
+  activateLed();
   delay(100);
-  deactivateLED();  
+  deactivateLed();  
   server.send(200, "text/plain", "LED was turned on briefly");
 }
 
-void turnOnLED() {
-  activateLED();
+void toggleLedOn() {
+  activateLed();
   server.send(200, "text/plain", "LED was turned on");
 }
 
-void turnOffLED() {
-  deactivateLED();
+void toggleLedOff() {
+  deactivateLed();
   server.send(200, "text/plain", "LED was turned off");
 }
 
-void toggleLED() {
+void toggleLed() {
   if (digitalRead(LED_BUILTIN) == HIGH) {
-    activateLED();
+    activateLed();
     server.send(200, "text/plain", "LED was turned on");
   } else {
-    deactivateLED();
+    deactivateLed();
     server.send(200, "text/plain", "LED was turned off");
   }
 }
@@ -56,7 +56,7 @@ void handleOptionsRequest() {
   server.send(204);
 }
 
-void handlePostToLED() {  
+void handlePostToLed() {  
 
   server.sendHeader("Access-Control-Allow-Origin", "*");
   server.sendHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
@@ -79,13 +79,13 @@ void handlePostToLED() {
     Serial.println("LED action: " + String(action));
 
     if (String(action) == "activate") {
-      turnOnLED();
+      toggleLedOn();
     } else if (String(action) == "deactivate") {
-      turnOffLED();
+      toggleLedOff();
     } else if (String(action) == "toggle") {
-      toggleLED();
+      toggleLed();
     } else if (String(action) == "blink") {
-      blinkLED();
+      blinkLed();
     } else {
       server.send(400, "text/plain", "Invalid 'action' key.");
       Serial.println("Invalid LED action: " + String(action) + "\n");
@@ -99,7 +99,7 @@ void handlePostToLED() {
 
 void startServer(){
 
-  server.on("/LED", HTTP_POST, handlePostToLED);
+  server.on("/LED", HTTP_POST, handlePostToLed);
   server.on("/LED", HTTP_OPTIONS, handleOptionsRequest);
 
   server.begin();
@@ -124,7 +124,7 @@ void connectToWiFi(){
 
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
-  deactivateLED();
+  deactivateLed();
 
   Serial.begin(9600);
 
