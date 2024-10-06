@@ -65,9 +65,9 @@ void handlePostToLED() {
     const char* action = parsedJson["action"];
     Serial.println("LED action: " + String(action));
 
-    if (String(action) == "on") {
+    if (String(action) == "activate") {
       turnOnLED();
-    } else if (String(action) == "off") {
+    } else if (String(action) == "deactivate") {
       turnOffLED();
     } else if (String(action) == "toggle") {
       toggleLED();
