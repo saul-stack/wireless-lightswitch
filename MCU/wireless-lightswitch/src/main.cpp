@@ -5,7 +5,7 @@
 
 const char* ssid = WIFI_SSID;
 const char* password = WIFI_PASSWORD;
-const char* device_name = "esp8266-lightswitch";
+const char* BOARD_HOSTNAME = "esp8266-lightswitch";
 
 ESP8266WebServer server(80);
 
@@ -107,7 +107,7 @@ void startServer(){
 }
 
 void connectToWiFi(){
-   WiFi.hostname(device_name);
+  WiFi.hostname(BOARD_HOSTNAME);
   WiFi.begin(ssid, password);
   Serial.println("Connecting to " + String(ssid));  
 
@@ -117,7 +117,7 @@ void connectToWiFi(){
   }
 
   Serial.println("\nWiFi connected.\nIP address: " + WiFi.localIP().toString());
-  Serial.println("Device name: " + String(device_name));
+  Serial.println("Device name: " + String(BOARD_HOSTNAME));
 
 }
 
