@@ -26,5 +26,5 @@ void startServer(){
   server.on("/LED", HTTP_OPTIONS, handleOptionsRequest);
 
   server.begin();
-  Serial.println("HTTP server started on port `" + String(PORT));
+  Serial.println("HTTP server started on port " + String(PORT));
 }
