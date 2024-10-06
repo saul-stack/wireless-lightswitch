@@ -56,6 +56,11 @@ void handleOptionsRequest() {
 }
 
 void handlePostToLED() {  
+
+  server.sendHeader("Access-Control-Allow-Origin", "*");
+  server.sendHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+  server.sendHeader("Access-Control-Allow-Headers", "Content-Type");
+  
   if (server.hasArg("plain")) {
     String requestBody = server.arg("plain");
 
