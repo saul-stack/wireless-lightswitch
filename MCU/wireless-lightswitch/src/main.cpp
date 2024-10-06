@@ -48,6 +48,13 @@ void toggleLED() {
 }
 
 
+void handleOptionsRequest() {
+  server.sendHeader("Access-Control-Allow-Origin", "*");
+  server.sendHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+  server.sendHeader("Access-Control-Allow-Headers", "Content-Type");
+  server.send(204);
+}
+
 void handlePostToLED() {  
   if (server.hasArg("plain")) {
     String requestBody = server.arg("plain");
@@ -87,6 +94,8 @@ void handlePostToLED() {
 void startServer(){
 
   server.on("/LED", HTTP_POST, handlePostToLED);
+  server.on("/LED", HTTP_OPTIONS, handleOptionsRequest);
+
   server.begin();
   Serial.println("HTTP server started on port 80");
 }
