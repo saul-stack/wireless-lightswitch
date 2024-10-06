@@ -21,6 +21,7 @@ void deactivateLED() {
 
 void blinkLED() {
   deactivateLED();  
+  delay(50);
   activateLED();
   delay(100);
   deactivateLED();  
