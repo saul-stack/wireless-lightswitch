@@ -5,5 +5,4 @@
 extern ESP8266WebServer server;
 extern const int PORT;
 
-void connectToWiFi();
 void startServer();
