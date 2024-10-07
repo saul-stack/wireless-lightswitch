@@ -6,8 +6,6 @@
 #include "utils/connection_functions.h"
 #include "utils/request_handlers.h"
 
-const int PORT = 80;
-
 ESP8266WebServer server(PORT);
 
 void setup() {
@@ -16,7 +14,8 @@ void setup() {
 
   Serial.begin(9600);
 
-  connectToWiFi();
+  initialiseWifi();
+
   startServer();
 
 }
