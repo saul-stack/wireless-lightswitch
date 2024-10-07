@@ -28,3 +28,10 @@ void initialiseWifi(){
   WiFi.hostname(BOARD_HOSTNAME);
   Serial.println("Board Hostname: " + String(BOARD_HOSTNAME));
 }
+void resetWifiCredentials(){
+  wifiManager.resetSettings();
+  Serial.println("Wifi credentials reset");
+  server.send(200, "text/plain", "Wifi credentials reset. Board restarted.");
+  delay(1000);
+  ESP.reset();
+}

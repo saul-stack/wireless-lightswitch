@@ -6,3 +6,4 @@ extern ESP8266WebServer server;
 
 void startServer();
 void initialiseWifi();
+void resetWifiCredentials();
