@@ -7,8 +7,6 @@
 #include "utils/connection_functions.h"
 #include "utils/request_handlers.h"
 
-const int PORT = 80;
-
 ESP8266WebServer server(PORT);
 WiFiManager wifiManager;
 
