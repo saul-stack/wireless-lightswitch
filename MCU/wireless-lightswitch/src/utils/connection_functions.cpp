@@ -12,6 +12,8 @@ void startServer(){
 
   server.on("/LED", HTTP_POST, handlePostToLed);
   server.on("/LED", HTTP_OPTIONS, handleOptionsRequest);
+  server.on("/reset", HTTP_POST, resetWifiCredentials);
+
 
   server.begin();
   Serial.println("HTTP server started on port " + String(PORT));
@@ -28,6 +30,7 @@ void initialiseWifi(){
   WiFi.hostname(BOARD_HOSTNAME);
   Serial.println("Board Hostname: " + String(BOARD_HOSTNAME));
 }
+
 void resetWifiCredentials(){
   wifiManager.resetSettings();
   Serial.println("Wifi credentials reset");

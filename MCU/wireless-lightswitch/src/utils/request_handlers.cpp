@@ -1,6 +1,7 @@
 #include <ArduinoJson.h>
 
 #include "led_functions.h"
+#include "connection_functions.h"
 #include "request_handlers.h"
 
 
